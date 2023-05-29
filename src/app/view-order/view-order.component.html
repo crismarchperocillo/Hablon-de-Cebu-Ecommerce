@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <section>
+        <div class="container">
+            <div class="feature-items">
+                <h2 class="title text-center">View Order</h2>
+                <p class="text-center"></p>
+            </div>
+            
+             <table class="table table-bordered">
+               <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th></th>
+                        <th>Total Price</th>
+                    </tr>
+                </thead>
+                        <tbody>
+                            <tr *ngIf="order">
+                                <td>{{ order.itemName }}</td>
+                                <td>{{ order. quantity }}</td>
+                                <td>{{ order.price | currency:'PHP'}}</td>
+                                <td><!--empty--></td>
+                                <td>{{ order.total | currency:'PHP'}}</td>
+                            </tr>
+                            <!--<tr>
+                                <td></td>
+					        	<td></td>
+						        <td></td>
+						        <td>Total </td>
+						        <td></td>
+                            </tr>-->
+                            <tr *ngIf="order">
+                                <td></td>
+					        	<td></td>
+						        <td></td>
+						        <td>Order Status</td>
+						        <td><!--display-->{{ order.oStatus }}</td>
+                            </tr>
+                            <tr *ngIf="order">
+                                <td></td>
+					        	<td></td>
+						        <td></td>
+						        <td>Date Ordered</td>
+						        <td><!--display--></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+					        	<td></td>
+						        <td></td>
+						        <td></td>
+						        <td><button class="btn btn-danger" [routerLink]="['/orders']">Close</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+        </div>
+    </section>
+</body>

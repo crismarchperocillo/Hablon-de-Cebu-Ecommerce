@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<app-homepage-user></app-homepage-user>
+<h2 class="text-center">Product Details</h2>
+
+<div class="row">
+  <div class="col-sm-5">
+    <div *ngIf="product">
+      <p><img src={{product.image}} onerror="this.src='assets/pictures/purse.jpg'" style="width: 300px; height: 400px;" class="img-thumbnail"/></p>
+    </div>
+  </div>
+  <div *ngIf="product" class="products">
+    <h3>Product Name: {{ product.name }}</h3>
+    <h4>Price: {{ product.price | currency:'PHP' }}</h4>
+    <p>Description: {{ product.description }}</p>
+    <p>Category: {{ product.category }}</p>
+    
+<a class="btn btn-success" [routerLink]="['/product']">Back</a>&nbsp;
+<button type="button" class="btn btn-warning" (click)="addToCart(product)">Add to Cart</button>
+  </div>
+</div>

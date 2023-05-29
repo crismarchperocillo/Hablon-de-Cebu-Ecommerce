@@ -1,0 +1,177 @@
+<app-sidebar></app-sidebar>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Customers Order</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9">
+                    <div class="feature-items">
+                        <h2 class="title text-center">ORDERS</h2>
+                    </div>
+            <div class="tab-slider--nav">
+                
+                    <button class="tab-slider--trigger" [class.active]="viewMode == 'tab1'" rel="tab1" (click)="viewMode ='tab1'">All Orders</button>
+                    <button class="tab-slider--trigger" [class.active]="viewMode == 'tab2'" rel="tab2" (click)="viewMode ='tab2'">Cancelled</button>
+                    <button class="tab-slider--trigger" [class.active]="viewMode == 'tab3'" rel="tab3" (click)="viewMode ='tab3'">Unpaid</button>
+                    <button class="tab-slider--trigger" [class.active]="viewMode == 'tab4'" rel="tab4" (click)="viewMode ='tab4'">Paid</button>
+               
+            </div>
+            <div class="tab-slider--container" [ngSwitch]="viewMode">
+                <div id="tab1" class="tab-slider--body" *ngSwitchCase="'tab1'">
+                  
+                  
+                    <!--All-->
+                  <table class="table table-boredered">
+                      <thead>
+                          <tr>
+                            <th>Order No.</th>
+                            <th>Customer Name</th>
+                            <th>Total Price</th>
+                            <th>Order Status</th>
+                            <th>Payment Status</th>
+                            <th>Date Ordered</th>
+                            <th>Operations</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let order of orders; let i = index">
+                              <td>{{ i + 1}}</td>
+                              <td>{{ order.name }}</td>
+                              <td>{{ order.total | currency:'PHP'}}</td>
+                              <td>{{ order. oStatus }}</td>
+                              <td>{{ order.pStatus }}</td>
+                              <td>{{dateObj | date: 'dd/MM/yyyy'}}</td>
+                              <td>
+                                  <p *ngIf="order.oStatus == 'Order Placed' && order.pStatus == 'Unpaid'">Waiting for Payment</p>
+                                  <p *ngIf="order.oStatus == 'Cancelled'">Cancelled</p>
+                                  <p *ngIf="order.oStatus == 'Delivered' && order.pStatus == 'Paid'">Order Delivered</p>
+                                  <button class="btn btn-info" *ngIf="order.oStatus == 'In Process' || order.oStatus == 'Dispatched' || order.oStatus == 'Order Placed' && order.pStatus == 'Paid'" (click)="processOrder(order)">Process Order</button>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+                </div>
+
+                <!--Cancelled-->
+                <div id="tab2" class="tab-slider--body" *ngSwitchCase="'tab2'">
+                    <table class="table table-boredered">
+                        <thead>
+                            <tr>
+                              <th>Order No.</th>
+                              <th>Customer Name</th>
+                              <th>Total Price</th>
+                              <th>Order Status</th>
+                              <th>Payment Status</th>
+                              <th>Date Ordered</th>
+                              <th>Operations</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let order of orders">
+                            <tr *ngIf="order.oStatus == 'Cancelled'">
+                                <td>{{ order.id }}</td>
+                                <td>{{ order.name }}</td>
+                                <td>{{ order.total | currency:'PHP'}}</td>
+                                <td>{{ order. oStatus }}</td>
+                                <td>{{ order.pStatus }}</td>
+                                <td>{{dateObj | date: 'dd/MM/yyyy'}}</td>
+                                <td>
+                                    <p *ngIf="order.oStatus == 'Cancelled'">Cancelled</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!--Unpaid-->
+                <div id="tab3" class="tab-slider--body" *ngSwitchCase="'tab3'">
+                    <table class="table table-boredered">
+                        <thead>
+                            <tr>
+                              <th>Order No.</th>
+                              <th>Customer Name</th>
+                              <th>Total Price</th>
+                              <th>Order Status</th>
+                              <th>Payment Status</th>
+                              <th>Date Ordered</th>
+                              <th>Operations</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let order of orders">
+                            <tr *ngIf="order.pStatus == 'Unpaid' && order.oStatus != 'Cancelled'">
+                                <td>{{ order.id }}</td>
+                                <td>{{ order.name }}</td>
+                                <td>{{ order.total | currency:'PHP'}}</td>
+                                <td>{{ order. oStatus }}</td>
+                                <td>{{ order.pStatus }}</td>
+                                <td>{{dateObj | date: 'dd/MM/yyyy'}}</td>
+                                <td>
+                                    <p *ngIf="order.oStatus == 'Order Placed' && order.pStatus == 'Unpaid'">Waiting for Payment</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                  </div>
+
+                  <!--Paid-->
+                  <div id="tab4" class="tab-slider--body" *ngSwitchCase="'tab4'">
+                    <table class="table table-boredered">
+                        <thead>
+                            <tr>
+                              <th>Order No.</th>
+                              <th>Customer Name</th>
+                              <th>Total Price</th>
+                              <th>Order Status</th>
+                              <th>Payment Status</th>
+                              <th>Date Ordered</th>
+                              <th>Operations</th>
+                            </tr>
+                        </thead>
+                       <tbody *ngFor="let order of orders; let i = index">
+                            <tr *ngIf="order.pStatus == 'Paid'">
+                                <td>{{ order.id }}</td>
+                                <td>{{ order.name }}</td>
+                                <td>{{ order.total | currency:'PHP'}}</td>
+                                <td>{{ order. oStatus }}</td>
+                                <td>{{ order.pStatus }}</td>
+                                <td>{{dateObj | date: 'dd/MM/yyyy'}}</td>
+                                <td>
+                                    
+                                    <p *ngIf="order.oStatus == 'Delivered' && order.pStatus == 'Paid'">Order Delivered</p>
+                                    <button class="btn btn-info" *ngIf="order.oStatus == 'In Process' || order.oStatus == 'Dispatched' || order.oStatus == 'Order Placed' && order.pStatus == 'Paid'" (click)="processOrder(order)">Process Order</button>
+                                    
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                  </div>
+              </div>
+              <section *ngIf="isClicked" (keyup.enter)="onEnter()" class="pop-up">
+                <div *ngIf="ord">
+                    <form [formGroup]="ord">
+                     <div class="input-group" >
+                         <div class="input-group-addon">Order Status</div>
+                         <select name="status" class="form-control" formControlName="oStatus">
+                             <option value="Order Placed" disabled selected hidden>Select Status</option>
+                             <option value="In Process">In Process</option>
+                             <option value="Dispatched">Dispatched</option>
+                             <option value="Delivered">Delivered</option>
+                         </select>
+                     </div>
+                     <div class="input-group">
+                         <button class="btn btn-info" (click)="save()">Update</button>&nbsp;
+                         <button class="btn btn-danger" (click)="cancel()">Cancel</button>
+                     </div>
+                    </form>
+                </div>
+            </section>
+            </div>
+        </div>
+    </div>
+</section>
+   

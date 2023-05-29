@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <app-homepage-user></app-homepage-user>
+    <div class="container" *ngIf="isShown">
+        <div class="feature-items">
+            <h2 class="title text-center">Shopping Cart</h2>
+            <p class="text-center">Get the best items from Hablon de Cebu</p>
+        </div>
+       
+        <table class="table table-bordered" >
+            <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of items; let i = index">
+                    
+                    <td><button class="btn btn-danger" type="button" (click)="delete(i)">Delete</button></td>
+                    <td><img src={{item.image}} onerror="this.src='assets/pictures/purse.jpg'" style="width: 100px; height: 100px;" class="img-thumbnail"/></td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.price | currency:'PHP'}}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" (click)="decreaseQuantity(item)">-</button> {{item.quantity}} 
+                        <button class="btn btn-primary btn-sm" (click)="increaseQuantity(item)">+</button> 
+                    </td>
+                    <td>{{ item.price * item.quantity | currency:'PHP'}}</td>
+                                     
+            </tr>
+            
+                <tr>
+                    <td colspan="7">
+                         <div class="button col-md-6">
+                             <button class="btn btn-info" [routerLink]="['/product']">Continue Shopping</button> &nbsp;
+                             <button class="btn btn-success" (click)="checkout()" [disabled]="getTotalPrice() == 0">Checkout</button>
+                         </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="cart_totals">
+            <div class="col-md-6 push-md-6 no-padding">
+                <h4 class="heading">Cart Totals</h4>
+                        <table class="table table-bordered col-md-6">
+                    <tbody>
+                        <tr>
+                            <th>Cart Subtotal</th>
+                            <td>
+                                 {{ getTotalPrice() | currency:'PHP'}}
+                               
+                            </td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div> 
+        </div>
+
+        <div class="my-address">
+            <h3>My Addresses</h3>
+            <p>The following addresses will be used on the checkout page by default.</p>
+                <div class="row">
+                    <div class="address col-md-6" *ngFor="let user of users; let i = index">
+                        <h4>My Address  <a (click)="editDetails(user); toggleShow()">Edit</a></h4>
+
+                        <p>First Name: {{ user.fname }}</p>
+                        <p>Last Name: {{ user.lname }}</p>
+                        <p>Address: {{ user.address }}</p>
+                        <p>Zip: {{ user.zip }}</p>
+                        <p>Mobile: {{ user.mobile }}</p>
+                        <p>Email: {{ user.email }}</p>
+                        <button class="btn btn-warning" [routerLink]="['/orders']" style="margin-bottom: 10px;">View Orders</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <!--display edit address-->
+    <section *ngIf="isClicked" (keyup.enter)="onEnter()" class="pop-up-address">
+        <div class="feature-items_pInfo">
+            <h2 class="text">My Addresses</h2>
+            <p class="text">The following addresses will be used on the checkout page by default.</p>
+        </div>
+        <div *ngIf="USER">
+            <form [formGroup]="USER">
+
+                <div class="input-group" >
+                     <div class="input-group-addon">First Name:</div>
+                    <input type="text" class="form-control" name="categoryname" formControlName="fname">
+                     <div class="input-group-addon">Last Name:</div>
+                    <input type="text" class="form-control" name="categoryname" formControlName="lname" value="">
+                </div>
+
+                <div class="input-group" >
+                    <div class="input-group-addon">Address:</div>
+                   <input type="text" class="form-control" name="categoryname" formControlName="address">
+                   <div class="input-group-addon">Zip Code:</div>
+                   <input type="text" class="form-control" name="categoryname" formControlName="zip">
+                </div>
+
+                <div class="input-group" >
+                    <div class="input-group-addon">Mobile:</div>
+                   <input type="text" class="form-control" name="categoryname" formControlName="mobile" >
+                   <div class="input-group-addon">Email:</div>
+                   <input type="text" class="form-control" name="categoryname" formControlName="email">
+                </div>
+                <div class="input-group" >
+                    <button class="btn btn-success" (click)="save()">Save Changes</button>&nbsp;
+                    <button class="btn btn-danger" (click)="cancel()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </section>
+    
+</body>

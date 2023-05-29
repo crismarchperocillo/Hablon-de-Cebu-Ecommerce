@@ -1,0 +1,50 @@
+body {font-family: Arial;}
+
+.tab-slider--nav {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  
+}
+
+
+.tab-slider--nav button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+
+.tab-slider--nav button:hover {
+  background-color: #ddd;
+}
+
+
+.tab-slider--nav button.active {
+  background-color: #ccc;
+}
+
+
+.tab-slider--container {
+ 
+  padding: 0px;
+  border-top: none;
+  
+}
+button{
+  margin-top: 1px;
+}
+.features_items{
+	overflow:hidden;
+}
+.title{
+    color: #FE980F;
+    font-family: 'Roboto', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+}

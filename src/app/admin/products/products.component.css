@@ -1,0 +1,38 @@
+th {
+    text-align: center;
+}
+.features_items{
+	overflow:hidden;
+}
+.title{
+    color: #FE980F;
+    font-family: 'Roboto', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.input-group-addon{
+    width: 190px;
+}
+.input-group .btn{
+    margin-top: 5px;
+}
+.pop-up-edit .input-group{
+    margin-left: -30px;
+    margin-top: 5px;
+    width: 70%;
+}
+.pop-up-addnewdata .input-group{
+    margin-left: -15px;
+    margin-top: 2px;
+   
+}
+option{
+    width: 130%;
+}
+.pop-up-addnewdata .input-group input{
+width: 200%;
+}
+.btn {
+    margin-bottom: 5px;
+}

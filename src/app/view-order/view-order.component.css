@@ -1,0 +1,12 @@
+table, th{
+    text-align: center;
+}
+.features_items{
+	overflow:hidden;
+}
+.title{
+    color: #FE980F;
+    font-family: 'Roboto', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+}

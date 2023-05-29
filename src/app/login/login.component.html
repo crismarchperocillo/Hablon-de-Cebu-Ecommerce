@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body id="bannerImage">
+        <div class="container"> 
+                <p class="login-text" style="font-size: 3rem; font-weight: 800;">Hablon De Cebu Login</p>
+                <form  class="login-email" [formGroup]="reactiveForm" #form="ngForm" >
+                    <div class="form-group">
+                        <input type="text" placeholder="Email" name="email" id="email" formControlName="email" [class.is-invalid]="email.invalid && (email.dirty || email.touched)"
+                        [(ngModel)]="userEmail"
+                        >
+                        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="invalid-feedback">
+                            <div *ngIf="email.errors?.['required']">
+                                This field is required.
+                            </div>
+                        <div *ngIf="email.errors?.['minlength']">
+                                This field must have at least 1 character.
+                        </div>
+                        <div *ngIf="email.errors?.['maxlength']">
+                                This field must have at most 250 characters.
+                        </div>
+                        <div *ngIf="!email.errors?.['required'] && !email.errors?.['minlength'] && !email.errors?.['maxlength'] && email.errors?.['emailValidator']">
+                                Invalid email format.
+                        </div>
+                        </div>
+                        
+                    </div>
+                    <div class="form-group">
+                        <input placeholder="Password" name="password" [type]="user.showPassword ? 'text' : 'password'" id="password" name="password" formControlName="password"  style="margin-left: -30px;"
+                        [(ngModel)]="userPassword"
+                        >
+                        <i class="fa fa-eye" (click)="user.showPassword = !user.showPassword"></i>
+                        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="invalid-feedback">
+                            <div *ngIf="password.errors?.['required']">
+                              This field is required.
+                            </div>
+                            <div *ngIf="password.errors?.['minlength']">
+                              This field must have at least 5 characters.
+                            </div>
+                            
+                          </div>
+                    </div>
+                    <div class="form-group">
+                        <button name="submit" class="btn btn-info" [disabled]="userEmail =='' || userPassword =='' || password.errors?.['minlength'] || email.errors?.['emailValidator']" (click)="login()">Login</button>
+                    </div>
+                    <div class="form-group">
+                        <a class="forgot-password pull-right">Forgot your Password?</a>
+                    </div>
+                        <p class="login-register-text">Don't have an account? <a [routerLink]="['/register']">Register Here</a>.</p>
+               </form>
+        </div>  
+
+    </body>
+    <footer *ngIf="_router.url != '/index'"></footer>

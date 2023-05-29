@@ -1,0 +1,62 @@
+.navbar{
+  margin-bottom: 0px;
+}
+
+#bannerImage{
+  
+  margin-top: 20px;
+  padding-bottom:50px;
+  margin-bottom: 20px;
+  text-align:center;
+  color:#414141;
+  background:url(./../../assets/pictures/intro-bg_1.jpg);
+  background-size:cover;
+}
+
+#bannerContent{
+  position:relative;
+  padding-top:6%;
+  padding-bottom:6%;
+  margin-top:12%;
+  margin-bottom:12%;
+  background-color:rgba(0,0,0,0.7);
+  max-width:660px;
+  margin-left: 20%;
+  color: white;
+}
+body{
+  color: #222222;
+}
+
+html { 
+  min-height:100%;
+  position:relative;    
+} 
+@media (min-width:320px){
+  #autoResize{
+      font-size:12px;
+  }
+}
+@media (min-width:481px){
+  #autoResize{
+      font-size:16px;
+  }
+}
+@media (min-width:641px){
+  #autoResize{
+      font-size:18px;
+  }
+}
+@media (max-width:991px){
+  #autoResize{
+      font-size:20px;
+  }
+  #bannerContent{
+    margin-left: 2%;
+  }
+}
+@media (max-width:1000px){
+  #autoResize{
+      font-size:26px;
+  }
+}

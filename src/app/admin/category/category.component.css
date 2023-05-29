@@ -1,0 +1,18 @@
+th {
+    text-align: center;
+}
+.features_items{
+	overflow:hidden;
+}
+.title{
+    color: #FE980F;
+    font-family: 'Roboto', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+}
+table {
+    margin-top: 10px;
+}
+.input-group .btn{
+    margin-top: 5px;
+}

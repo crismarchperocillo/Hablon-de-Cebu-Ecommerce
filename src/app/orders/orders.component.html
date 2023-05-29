@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="feature-items">
+            <h2 class="title text-center">My Orders</h2>
+            <p class="text-center"></p>
+        </div>
+        
+        <table class="table table-bordered" *ngIf="isShown">
+            <thead>
+                <tr>
+                    <td>Order No.</td>
+                    <td>Order Status</td>
+                    <td>Payment Status</td>
+                    <td>Date Ordered</td>
+                    <td>Operations</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let order of orders let i = index">
+                    <td>{{i + 1}}</td>
+                    <td>{{order.oStatus}}</td>
+                    <td>{{order.pStatus}}</td>
+                    <td>{{dateObj | date: 'dd/MM/yyyy'}}</td>
+                    <td>
+                        <button class="btn btn-info" (click)="viewOrder(order, i);toggleShow1()">View</button>&nbsp;
+                        <button class="btn btn-success" *ngIf="order.pStatus == 'Unpaid' && order.oStatus != 'Cancelled'" (click)="payOrder(order); toggleShow()">Pay</button>&nbsp;
+                        <button class="btn btn-danger" *ngIf="order.pStatus == 'Unpaid' && order.oStatus != 'Cancelled'" (click)="cancelOrder(order); toggleShow2()">Cancel</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4"></td>
+                    <td><button class="btn btn-danger" [routerLink]="['/cart']">Close</button></td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <section *ngIf="isHit; isShown" (keyup.enter)="Enter()">
+            <div *ngIf="cancelled">
+                <div class="content-blog">
+					<div class="page_header text-center">
+						<h2>Shop - Cancel Order</h2>
+						<p>Do you want to cancel Order?</p>
+					</div>
+                </div>
+                <!--Cancel-->
+                <form [formGroup]="cancelled">
+                    <div class="input-group" style="display:none;">
+                        <select name="status" class="form-control" hidden="hidden">
+                            <option value="Cancelled" hidden selected>Cancel</option> 
+                        </select>
+                    </div>
+                </form>
+                <label>Reason :</label>
+							<textarea class="form-control" name="reason" cols="10" [(ngModel)]="cancelReason" minlength="2"></textarea>
+                <div class="input-group">
+                    <button class="btn btn-warning" style="width: 100px;" (click)="cancel()" [disabled]="cancelReason === ''">Cancel Order</button>&nbsp;
+                    <button class="btn btn-danger" style="width: 100px;" (click)="closeCancel()">Close</button>
+                </div>
+            </div>
+        </section>
+
+        <div class="contact-clean">
+        <section *ngIf="isClicked" (keyup.enter)="onEnter()" class="pop-up">
+            <div class="col-sm-9" >
+                <div class="content-blog" *ngIf="pay">
+
+                    <!--Payment-->
+                    <form [formGroup]="pay">
+                        <h3 class="total-txt text-center" style="margin-left:35px;">Pay Orders Through Gcash</h3>
+                        <div class="top">
+                        <label class="total-txt text-center">Total amount to be paid is ₱</label>
+                        <input type="text" class="total" formControlName="total" readonly>
+                        </div>
+                        <div class="input-group" style="display:none ;">
+                            
+                            <select name="status" class="form-control" hidden="hidden">
+                                <option value="Paid" hidden selected>Paid</option> 
+                            </select>
+                        </div>
+                    
+                        <div class="input-group">
+                            <img src="/assets/images/gcash.png">
+                            <label class="form-label text-center">Scan and send the exact amount of money required to the wallet supplied above.&nbsp;</label>
+                        </div>
+                        
+                        <div class="input-group" style="margin-left:70px;">
+                            <label style="margin-left:10px;">Payment Information</label>
+                            <div>Gcash Name</div>
+                            <input class="form-control" type="text" name="gName" formControlName="gName" [(ngModel)]="gName">
+                        </div>
+                        <div class="input-group" style="margin-left:70px;">
+                            <div>Gcash Number</div>
+                            <input class="form-control" type="text" name="gNumber" formControlName="gNumber" (keypress)="keyPressNumbers($event)" [(ngModel)]="gNumber">
+                        </div>
+                        <div class="input-group" style="margin-left:70px;">
+                            <div>Proof of Payment</div>
+                            <input type="file" class="form-control" name="payment" style="width:196px;" formControlName="gProof" [(ngModel)]="gProof">
+                        </div>
+                        <div class="input-group " style="margin-left:70px;">
+                            <button class="btn btn-info" (click)="save()" [disabled]="gName === '' || gNumber === '' || gProof === ''">Send Payment</button><br>
+                            <button class="btn btn-danger" (click)="cancelPay()">Cancel</button>
+                        </div>
+                        </form>
+                </div>
+            </div>
+        </section>
+        </div>
+    </div>
+
+
+    <!--view-->
+    <form [formGroup]="viewForm" #form="ngForm" *ngIf="onClicked" (keyup.enter)="ifEnter()">
+        <table class="table table-bordered">
+            <thead>
+                 <tr>
+                     <th>Product Name</th>
+                     <th>Quantity</th>
+                     <th>Price</th>
+                     <th></th>
+                     <th>Total Price</th>
+                 </tr>
+             </thead>
+             <tbody>
+                 <tr>
+                     <td><input type="text"formControlName="itemName" readonly></td>
+                     <td><input type="text"formControlName="quantity" readonly></td>
+                     <td>₱<input type="text"formControlName="price" readonly></td>
+                     <td></td>
+                     <td>₱<input type="text"formControlName="total" readonly></td>
+                     
+                 </tr>
+                 <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Payment Status</td>
+                    <td><!--display--><input type="text"formControlName="pStatus" readonly></td>
+                </tr>
+                 <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Order Status</td>
+                    <td><!--display--><input type="text"formControlName="oStatus" readonly></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Date Ordered</td>
+                    <td><!--display-->{{dateObj | date: 'dd/MM/yyyy'}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><button class="btn btn-danger" (click)="toggleShow()">Close</button></td>
+                </tr>
+             </tbody>
+            </table>
+
+    <!--<div class="input-group" >
+        <div class="input-group-addon">Description</div>
+        <input type="text" class="form-control"placeholder="Product Description" formControlName="oStatus">
+    </div>-->
+    </form>
+</body>

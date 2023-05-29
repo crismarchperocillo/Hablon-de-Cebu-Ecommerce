@@ -1,0 +1,44 @@
+.button {
+    text-align: center;
+   
+    width: 90%;
+}
+.Checkout{
+    text-align: center;
+    width: 100%;
+    margin-top: 25%;
+    margin-bottom: 25%;
+}
+th {
+    text-align: center;
+}
+.features_items{
+	overflow:hidden;
+}
+.title{
+    color: #FE980F;
+    font-family: 'Roboto', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+}
+.input-group-addon{
+    width: 100px;
+}
+.input-group .btn{
+    margin-top: 5px;
+}
+.input-group input{
+    width: 100%;
+}
+.pop-up-address{
+    margin-top: 10%;
+    width: 150%;
+    height: 90%;
+}
+.features-items_pInfo{
+	margin-left: -200px;
+
+}
+.pop-up-address .input-group{
+    margin-top: 2px;
+}

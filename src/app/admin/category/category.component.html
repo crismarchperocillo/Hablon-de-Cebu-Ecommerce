@@ -1,0 +1,40 @@
+<app-sidebar></app-sidebar>
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+<section>
+    <div class="col-sm-9" >
+        <div class="feature-items">
+            <h2 class="title text-center">CATEGORY</h2>
+        </div>
+        <div>
+        <form [formGroup]="categoryForm" #form="ngForm">
+        <div class="input-group" >
+            <div class="input-group-addon">Category Name:</div>
+            <input type="text" class="form-control" name="name" placeholder="Category Name" formControlName="name">
+        </div>
+
+        <div class="input-group">
+            <button class="btn btn-info" (click)="modeEditForm ? setCategory() : addCategory()" [disabled]="!categoryForm.valid">Save</button>
+        </div>
+        </form>
+        <table class="table table-bordered">
+            <thead >
+                <th>Name</th>
+                <th colspan="2">Action</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cats of category; let i = index">
+                    <td>{{cats.name}}</td>
+                    <td><a class="btn btn-success" (click)="editCategory(cats, i)">Edit</a></td>
+                    <td><a class="btn btn-danger" (click)="deleteCategory(i)">Delete</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</section>
+</body>
