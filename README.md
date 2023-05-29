@@ -1,3 +1,3 @@
-#Hablon de Cebu Ecommerce
+# Hablon de Cebu Ecommerce
 
 Hablon de Cebu Ecommerce, developed using Angular as part of my OJT career, is a captivating online platform showcasing the exquisite Hablon textiles of Cebu. Built using Typescript, the platform offers a visually appealing user interface with static data. Customers can explore a diverse range of Hablon products and gain insights into the rich cultural heritage of Cebu's weaving traditions. While the data may be static, the platform still provides an immersive experience, allowing users to navigate through the product catalog, learn about the history of Hablon, and make purchases securely. Through this OJT project, I have gained valuable experience in Angular development, furthering my skills in building engaging interfaces for future dynamic applications.
